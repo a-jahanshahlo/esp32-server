@@ -10,6 +10,7 @@ import traceback
 import threading
 import opuslib_next
 import concurrent.futures
+import gc
 from abc import ABC, abstractmethod
 from config.logger import setup_logging
 from typing import Optional, Tuple, List
@@ -242,6 +243,7 @@ class ASRProviderBase(ABC):
     @staticmethod
     def decode_opus(opus_data: List[bytes]) -> List[bytes]:
         """将Opus音频数据解码为PCM数据"""
+        decoder = None
         try:
             decoder = opuslib_next.Decoder(16000, 1)
             pcm_data = []
@@ -266,3 +268,10 @@ class ASRProviderBase(ABC):
         except Exception as e:
             logger.bind(tag=TAG).error(f"音频解码过程发生错误: {e}")
             return []
+        finally:
+            if decoder is not None:
+                try:
+                    del decoder
+                    gc.collect()
+                except Exception as e:
+                    logger.bind(tag=TAG).debug(f"释放decoder资源时出错: {e}")
