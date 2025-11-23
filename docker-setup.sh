@@ -37,7 +37,7 @@ trap 'stty "$old_stty_settings"' EXIT
 # Print colorful character paintings
 echo -e "\e[1;32m"  # Set color to bright green
 cat << "EOF"
-脚本作者：@Bilibili 香草味的纳西妲喵
+Script author:@Bilibili Vanilla Nasita Meow
  __      __            _  _  _            _   _         _      _      _        
  \ \    / /           (_)| || |          | \ | |       | |    (_)    | |       
   \ \  / /__ _  _ __   _ | || |  __ _    |  \| |  __ _ | |__   _   __| |  __ _ 
